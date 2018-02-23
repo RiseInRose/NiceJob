@@ -1,0 +1,63 @@
+<html>
+    <head>
+    <title>测试</title>
+    <script type="text/javascript">
+function createDiv(){
+    //首先创建div
+    var descDiv = document.createElement('div');
+    document.body.appendChild(descDiv);
+    //获取输入框dom元素
+    var text = document.getElementById('city');
+    //计算div的确切位置
+    var seatX = text.offsetLeft + text.offsetWidth;//横坐标
+    var seatY = text.offsetTop + text.offsetHeight;//纵坐标
+    //给div设置样式，比如大小、位置
+    var cssStr = "z-index:5;width:420px;height:300px;background-color:#FFFF99;border:1px solid black;position:absolute;left:"
+    + seatX + 'px;top:' + seatY + 'px;';
+    //将样式添加到div上，显示div
+    descDiv.style.cssText = cssStr;
+    descDiv.innerHTML = '岗位职责：1、大数据应用系统研发工作；2、海量数据分析和挖掘。职位描述:1.本科及以上学历，计算机、软件工程相关专业；2.大数据行业研发经验2~3年，熟悉Hadoop、Spark分布式系统开发；3.有数据挖掘、机器学习经验的优先；4.自学能力强，沟通能力强，适应加班、出差。优先条件:1、对大数据处理平台的设计和开发有浓厚兴趣；2、为代码疯狂。'.toString();
+    descDiv.id = 'descDiv';
+    descDiv.style.display = 'block';
+}
+function createDiv2(){
+    //首先创建div
+    var descDiv = document.createElement('div');
+    document.body.appendChild(descDiv);
+    var text = document.getElementById('ccc');
+    //计算div的确切位置
+    var seatX = text.offsetLeft + text.offsetWidth;//横坐标
+    var seatY = text.offsetTop + text.offsetHeight;//纵坐标
+    //给div设置样式，比如大小、位置
+    var cssStr = "z-index:5;width:420px;height:300px;background-color:#FFFF99;border:1px solid black;position:absolute;left:"
+    + seatX + 'px;top:' + seatY + 'px;';
+    //将样式添加到div上，显示div
+    descDiv.style.cssText = cssStr;
+    descDiv.innerHTML = '这是一个测试的div显示的内容';
+    descDiv.id = 'descDiv';
+    descDiv.style.display = 'block';
+}
+    </script>
+    </head>
+    <body>
+    <div>
+        <p>this is test!</p><br>
+        <p id = "ccc">this is test!</p><br>
+        <p>this is test!</p><br>
+        <p>this is test!</p><br>
+    <script type="text/javascript">
+    alert("这个是demo.html");
+</script>
+<script type="text/javascript" src="demo.js"></script>
+<script type="text/javascript">
+    alert("这个是demo.html2");
+</script>
+
+    </div>
+
+        <input type="button" name="test" id="city" value="CESHI" onclick="createDiv();"></input>
+        <input type="button" name="test" id="city2" value="CESHI2" onclick="createDiv2();"></input>
+        <input type="button" name="test" id="city3" value="" ;></input>
+
+    </body>
+</html>

@@ -1,0 +1,48 @@
+{% extends 'job_web/base_web.html' %}
+{% block grid %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	body, html,#allmap,#maps {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4BNYmGY6bFkg2knNx7tbKGqZDGA9cG0c"></script>
+	<title>地图展示</title>
+</head>
+<body>
+	<div id="allmap" style="height: 300px; width: 300px; "></div>
+{#    <div id="maps" style="height: 300px; width: 300px; "></div>#}
+
+</body>
+</html>
+{% endblock %}
+{% block baidumap_js%}
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");    // 创建Map实例
+	map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+	//添加地图类型控件
+	map.addControl(new BMap.MapTypeControl({
+		mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));
+	map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+{#    var map2 = new BMap.Map("maps");    // 创建Map实例#}
+{#	map2.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别#}
+{#	//添加地图类型控件#}
+{#	map2.addControl(new BMap.MapTypeControl({#}
+{#		mapTypes:[#}
+{#            BMAP_NORMAL_MAP,#}
+{#            BMAP_HYBRID_MAP#}
+{#        ]}));#}
+{#	map2.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的#}
+{#	map2.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放#}
+
+</script>
+
+{% endblock %}

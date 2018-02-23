@@ -1,0 +1,62 @@
+<html lang = 'en'>
+<body>
+<script language="javascript" type="text/javascript">
+<!--
+// 浏览器支持代码
+function AjaxFunction(){
+    var AjaxRequest;  // 缓存 XMLHttpRequest 对象
+    if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+        AjaxRequest=new XMLHttpRequest();
+        }
+    else
+      {// code for IE6, IE5
+      AjaxRequest=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+
+    // 创建一个接受服务器发送的数据的函数，它还会更新同一页面的 div 部分。
+    AjaxRequest.onreadystatechange = function(){
+
+        if(AjaxRequest.readyState == 4 && AjaxRequest.status==200){alert('4');}
+        if(AjaxRequest.readyState == 1 ){alert(AjaxRequest.status);}
+        if(AjaxRequest.readyState == 4 ){alert(AjaxRequest.status);}
+
+
+
+        if(AjaxRequest.readyState == 4 && AjaxRequest.status==200) {
+            alert(AjaxRequest.responseText);
+            var AjaxDisplay = document.getElementById('AjaxDiv');
+            if (gg == '24'){
+                 AjaxDisplay.innerHTML = 'uioui';
+            }
+        }
+    }
+
+    // 然后获取用户输入值并传递给服务器脚本
+    var age = document.getElementById('age').value;
+    var wpm = document.getElementById('wpm').value;
+    var sex = document.getElementById('sex').value;
+    var queryString = "?age=" + age ;
+
+    queryString +=  "&wpm=" + wpm + "&sex=" + sex;
+    AjaxRequest.open("GET", "http://127.0.0.1:8000/job_web/ajax_test" + queryString, true);
+    AjaxRequest.send(null);
+}
+//-->
+</script>
+
+<form name='myForm'>
+
+    Max Age: <input type='text' id='age' value="11"/> <br />
+    Max WPM: <input type='text' id='wpm' value="13"/> <br />
+    Sex:
+    <select id='sex'>
+      <option value="m">m</option>
+      <option value="f">f</option>
+    </select>
+    <input type='button' onclick='AjaxFunction()' value='Query MySQL'/>
+
+</form>
+<div id='AjaxDiv'>there will show response!</div>
+</body>
+</html>

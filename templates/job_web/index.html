@@ -1,0 +1,254 @@
+{% extends 'job_web/base_web.html' %}
+{% load static %}
+
+{% block title %}
+<title>
+      index
+</title>
+<script>
+function testDisplay()
+{
+var divD = document.getElementById("displaybtn");
+var block_1 = document.getElementById("hiddenbtn");
+if(divD.style.display=="none")
+{
+divD.style.display = "block";
+block_1.setAttribute("value","隐藏手动删除");
+}
+else
+{
+divD.style.display = "none";
+block_1.setAttribute("value","显示手动删除");
+}
+}
+</script>
+{% endblock %}
+
+{#百度地图头#}
+    {% block baidumap_head %}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+            #map_index {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+        </style>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4BNYmGY6bFkg2knNx7tbKGqZDGA9cG0c"></script>
+    {% endblock %}
+
+    {% block index_body %}
+{#        <script >#}
+{#        window.onload=function (){#}
+{#        var get=document.getElementById("select_chart").value;#}
+{#        document.getElementById("page_next").href= '?&select_chart='+ get +'&page= {{ lat.next_page_number }}';#}
+{#        }#}
+{#        </script>#}
+
+    {% if homepage_check == 'yes' %}
+        <div class="column " style="margin: 15px 35% 0 35%">
+            <H2 style='font-family: "Al Nile"'>Find Nice Job</H2>
+        </div>
+    {% endif %}
+    <div class="ui one column grid " style="margin: 1%">
+    <div class="ui top attached segment">
+      <div class="column">
+        <div id="map_index" style="height:400px;width:900px;"></div>
+      </div>
+      <div class="column" style="">
+          <div class="pagnitor">
+              {% if lat.has_previous %}
+                  <a href = "page = {{ lat.previous_page_number }}">< Pre </a>
+              {% endif %}
+                <span>{{ lat.number }} of {{ lat.paginator.num_pages }}</span>
+              {% if lat.has_next %}
+                <a id="page_next" href = "page = {{ lat.next_page_number }}" >Next ></a>
+              {% endif %}
+{#                  <a id="page_next" href = "?&select_chart= &page= {{ lat.next_page_number }}" >Next ></a>#}
+          </div>
+      </div>
+    </div>
+    <div class="ui bottom attached tabular menu">
+        {% for each_name in datas_name %}
+            {% if each_name == datas_name_check %}
+                <a class="item active">
+            {% else %}
+                <a class="item ">
+            {% endif %}
+              <form action="/job_web/mine/" method="get">
+{#              border:none#}
+                <input type="button" name=""  style="z-index:-1;background:transparent;border:none;margin: -15px 0 -15px -15px" value="X">
+                  <input id="select_chart" type="submit" name="select_chart" style="POSITION: relative;z-index:1;background:transparent;margin: -15px -18px -15px -8px;padding: 10px 5px;border:none;" value="{{ each_name }}" >
+{#                 这里有个BUG，如果关键词超过5个字，那么删除按钮会往右侧移动，导致点击"X"不能删除。#}
+                <input type="submit" name="delete"  style="POSITION: relative;opacity:0;z-index:0;background:transparent;margin: -15px 0 -15px -68px ;" value="{{ each_name }}">
+              </form>
+                </a>
+        {% endfor %}
+
+    </div>
+      <div class="column" style="">
+          <form action="/job_web/mine/" method="get">
+              请添加需要监控的职位：<input type="text" name="add">
+              <input type="submit" value="添加职位">
+
+              <input id="hiddenbtn" type="button" value="手动删除职位" onclick="testDisplay()"/><br>
+              <div id="displaybtn" style="display:none">
+                  手动删除已监控的职位：<input type="text" name="delete">
+                  <input type="submit" value="删除">
+              </div>
+          </form>
+          <!--这里，最好先一个方法处理一个问题。-->
+      </div>
+    </div>
+
+        <h3 class="ui top attached header">状态栏：</h3>
+        <div class="ui attached segment" id="detail_info">
+            {% if add_datas_worning != '' %}
+                <p>{{ add_datas_worning }}<br></p>
+            {% endif %}
+            {% if add_datas_info != '' %}
+                <p>{{ add_datas_info }}<br></p>
+            {% endif %}
+            {% if select_chart_info != '' %}
+                <p>{{ select_chart_info }}<br></p>
+            {% endif %}
+            {% if delete_datas_info != '' %}
+                <p>{{ delete_datas_info }}<br></p>
+            {% endif %}
+        </div>
+
+{#        <div style="margin: 100px;border-color: red;">#}
+{#        <a>{% for i in monitor_list %}{{ i }}<br>{% endfor %}</a>#}
+{#        </div>#}
+{##}
+{#        <div style="margin: 200px;border-color: #922eb4;border-image-width: 10px">#}
+{#            <a>{% for i in monitor_list_all %}{{ i }}<br>{% endfor %}</a>#}
+{#        </div>#}
+    <script type="text/javascript">
+    {% for i in lat %}
+            // 将详细信息写入到网页中，隐藏。等点击时，显示。
+            var job_detail_id = '{{ i.job_url }}'.toString();
+            // 下面这句有问题，因为加载的数据有换行符，导致后面tostring不能执行。导致所有js不能执行。
+            {#var job_detail = '({{ i.job_requirements }})'.toString();#}
+            var job_detail = heredoc(function(){/*
+{{ i.job_requirements }}
+            */});
+            // 在网页中添加网页代码
+            createDiv(job_detail_id,job_detail);
+    {% endfor %}
+    // 将多行字符串转换成真正的字符串！
+    function heredoc(fn) {
+        return fn.toString().split('\n').slice(1,-1).join('\n') + '\n'
+    }
+    function createDiv(job_detail_id,job_detail){
+    //首先创建div
+    var descDiv = document.createElement('div');
+    document.body.appendChild(descDiv);
+    //获取输入框dom元素
+    var text = document.getElementById('detail_info');
+    //计算div的确切位置
+    //给div设置样式，比如大小、位置
+    var cssStr = "position:absolute;left:160px;";
+    //将样式添加到div上，显示div
+    descDiv.style.cssText = cssStr;
+    descDiv.innerHTML = '<p>'+job_detail +'</p>';
+    descDiv.id = job_detail_id;
+    descDiv.style.display = 'none';
+    }
+    </script>
+
+    {% endblock %}
+
+    {#百度地图js脚本#}
+    {% block baidumap_js %}
+        <script type="text/javascript">
+        // 百度地图API功能
+        var map = new BMap.Map("map_index");
+        {#var pt = new BMap.Point(121.509000,31.246242);#}
+        map.centerAndZoom(new BMap.Point(121.509000,31.246242), 12);
+
+        //创建小狐狸
+        {% for i in lat %}
+            {#var data_info = [{{i.location.lng}},{{i.location.lat}},'名称：',{{ i.job }},'薪酬：'{{ i.pay_last }}];#}
+            var data_info = [
+                {{i.location.lng}},
+                {{i.location.lat}},
+                '名称：'+'{{ i.job }}'.toString()+'<br>'+
+                '薪酬：'+'{{ i.pay_last }}'.toString()+'<br>'+
+                '经验：'+'{{ i.experience }}'.toString()+'<br>'+
+                '发布时间：'+'{{ i.pub_time_last }}'.toString()+'<br>'+
+                '地点：'+'{{ i.address }}'.toString()+'<br>'+
+                '岗位详情：见下方"状态栏"',
+                '{{ i.job_url }}'.toString()];
+            var marker = new BMap.Marker(new BMap.Point(data_info[0],data_info[1]));//创建标注
+            var content = data_info[2];
+            map.addOverlay(marker); // 将标注添加到地图中
+            var detail_info_id = data_info[3];
+            addClickHander(content,marker,detail_info_id);
+        {% endfor %}
+
+        function addClickHander(content,marker,detail_info_id){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e,detail_info_id)});
+        }
+        function openInfo(content,e,detail_info_id){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content);  // 创建信息窗口对象
+            map.openInfoWindow(infoWindow,point); //开启信息窗口
+
+            // 显示之前隐藏的详细信息。//根据id获取DOCUMENT对象
+            // 先隐藏所有详细信息。
+            hidden_all_detail();
+            var btn=document.getElementById(detail_info_id);
+            btn.style.display = 'block';
+        }
+
+        function hidden_all_detail() {
+            {% for i in lat %}
+                var ids = '{{ i.job_url }}'.toString();
+                var btn = document.getElementById(ids);
+                btn.style.display = 'none';
+            {% endfor %}
+            }
+        // 开启拖拽
+        map.enableDragging();
+        // 添加带有定位的导航控件
+        var navigationControl = new BMap.NavigationControl({
+        // 靠左上角位置
+        anchor: BMAP_ANCHOR_TOP_LEFT,
+        // LARGE类型
+        type: BMAP_NAVIGATION_CONTROL_LARGE,
+        // 启用显示定位
+        enableGeolocation: true
+        });
+        map.addControl(navigationControl);
+        // 添加定位控件
+        var geolocationControl = new BMap.GeolocationControl();
+        geolocationControl.addEventListener("locationSuccess", function(e){
+        // 定位成功事件
+        var address = '';
+        address += e.addressComponent.province;
+        address += e.addressComponent.city;
+        address += e.addressComponent.district;
+        address += e.addressComponent.street;
+        address += e.addressComponent.streetNumber;
+        alert("当前定位地址为：" + address);
+        });
+        geolocationControl.addEventListener("locationError",function(e){
+        // 定位失败事件
+        alert(e.message);
+        });
+        map.addControl(geolocationControl);
+
+        //计算家到公司距离
+        var p1 = new BMap.Point(121.508391,31.246242);
+        var p2 = new BMap.Point(121.508356,31.246288);
+        var transit = new BMap.TransitRoute(map, {
+            renderOptions: {map: map}
+        });
+        transit.search(p1, p2);
+
+        //在添加的点上加入弹窗
+
+    </script>
+    {% endblock %}
+
+

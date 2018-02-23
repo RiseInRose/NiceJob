@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% block title %}{% endblock %}
+    <link rel="stylesheet" href={% static "css/semantic.css" %}>
+    <script src={% static "js/jquery.min.js" %}></script>
+    <script src={% static "js/semantic.js" %}></script>
+    <script src={% static "js/exporting.js" %}></script>
+    <script src={% static "js/highcharts.js" %}></script>
+    <script src={% static "js/highcharts-more.js" %}></script>
+    {% block baidumap_head %}{% endblock %}
+  </head>
+
+  <body>
+    <div class="ui thin visible left sidebar inverted vertical menu">
+      <div class="header item">
+        <img src={% static "images/logo2.jpg" %}>
+      </div>
+{#      <div class="item">#}
+{#        <a href="/job_web/my_vitae">My Vitae</a>#}
+{#        <i class=" icon"></i>#}
+{#      </div>#}
+      <div class="item">
+        <a href="/job_web/auto_launch_vitae">Auto Launch Vitae</a>
+        <i class=" icon"></i>
+      </div>
+      <div class="item">
+        <a href="/job_web/message_board">Message Board</a>
+        <i class=" icon"></i>
+      </div>
+    </div>
+
+    <div class="pusher">
+      <div class="ui menu">
+        <div class="header item" id="menu">
+          Menu
+          <i class="content icon"></i>
+        </div>
+        <div class="item" >
+            <a href="/job_web/index" >HomePage</a>
+        </div>
+        <div class="item">
+          <a href="/job_web/mine" >Mine</a>
+        </div>
+        <div class="item">
+          <a href="/job_web/help" >Help</a>
+        </div>
+        <div class="item">
+          <a href= "/job_web/contact" >Contact Author</a>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="item">
+          <button class="btn btn-default"><a href="{% url 'logout' %}?next = {{ request.path  }}">注销登录</a></button>
+          <button class="btn btn-default"><a href="{% url 'password_change' %}?next={{ request.path }}">修改密码</a>
+  </button>
+        </div>
+        <div class="item">
+          <button class="btn btn-default"><a href="#">欢迎你！{{ request.user.username }}</a></button>
+        </div>
+        {% endif %}
+      </div>
+        {% if not user.is_authenticated %}
+         <p>你还没有登录，请
+            <button class="btn btn-default"><a href="{% url 'login' %}">登录</a></button>
+            或者
+            <button class="btn btn-default"><a href="{% url 'myusers:register' %}">注册</a></button>
+        </p>
+        {% else %}
+            {% block baidumap_body %}{% endblock %}
+            {% block grid %}{% endblock %}
+            {% block index_body %}{% endblock %}
+        {% endif %}
+    </div>
+
+    <script>
+    $('#menu').click(function () {
+      $('.ui.sidebar').sidebar('toggle');
+    });
+    </script>
+  </body>
+</html>
+{% block baidumap_js %}{% endblock %}
+

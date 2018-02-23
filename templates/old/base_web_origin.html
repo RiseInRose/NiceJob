@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% block title %}{% endblock %}
+    <link rel="stylesheet" href={% static "css/semantic.css" %}>
+    <script src={% static "js/jquery.min.js" %}></script>
+    <script src={% static "js/semantic.js" %}></script>
+    <script src={% static "js/exporting.js" %}></script>
+    <script src={% static "js/highcharts.js" %}></script>
+    <script src={% static "js/highcharts-more.js" %}></script>
+    {% block baidumap_head %}{% endblock %}
+  </head>
+
+  <body>
+    <div class="ui thin visible left sidebar inverted vertical menu">
+      <div class="header item">
+        <img src={% static "images/logo2.jpg" %}>
+      </div>
+      <div class="item">
+        <a href="#">Doucument</a>
+        <i class="browser icon"></i>
+      </div>
+      <div class="item">
+        <a href="#">Charts</a>
+        <i class="bar chart icon"></i>
+      </div>
+      <div class="item">
+        Others
+        <i class="idea icon"></i>
+      </div>
+    </div>
+
+    <div class="pusher">
+      <div class="ui menu">
+        <div class="header item" id="menu">
+          Menu
+          <i class="content icon"></i>
+        </div>
+        <div class="item" >
+            <a href="Map" >Full Job Map</a>
+        </div>
+        <div class="item">
+          <a href="Mine" >Mine</a>
+        </div>
+        <div class="item">
+          <a href="History" >History</a>
+        </div>
+        <div class="item">
+          <a href="Contact/" >Contact Author</a>
+        </div>
+      </div>
+        {% block baidumap_body %}{% endblock %}
+        {% block grid %}{% endblock %}
+    </div>
+    {% block index_body %}{% endblock %}
+    <script>
+    $('#menu').click(function () {
+      $('.ui.sidebar').sidebar('toggle');
+    });
+    </script>
+  </body>
+</html>
+{% block baidumap_js %}{% endblock %}
+

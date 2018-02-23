@@ -1,0 +1,29 @@
+{% extends 'job_web/base_web.html' %}
+{% load static %}
+
+{% block title %}
+<title>
+      index
+</title>
+{% endblock %}
+
+{% block index_body %}
+<h2 class="ui aligned icon header " style="margin-left: -30%"><i class="circular users icon "></i> 开发者联系方式 </h2>
+
+<div class="ui card" style="margin-left: 3%">
+  <div class="image">
+    <img src={% static "images/nice.gif" %}>
+  </div>
+  <div class="content" >
+    <a class="header">陈鼎</a>
+    <div class="meta">
+      <span class="date">2017年加入</span>
+    </div>
+    <div class="description">现居住上海，<br>邮箱：caturbhuja@foxmail.com<br>微信：chending2012</div>
+  </div>
+  <div class="extra content">
+    <a><i class="user icon"></i>  </a>
+  </div>
+</div>
+
+{% endblock %}

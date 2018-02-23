@@ -1,0 +1,45 @@
+{% extends 'job_web/base_web.html' %}
+{% load static %}
+
+{% block title %}
+<title>
+      Message Board
+</title>
+{% endblock %}
+
+{% block index_body %}
+<div style="margin: 25px 0 0 15px">
+<h4>Message Board：</h4>
+<p>If you have some amazing Idea and your want me help you<br>
+    Please send me E-mail：caturbhuja@foxmail.com<br>
+    Or get me Wechat：chending2012</p>
+<div class="ui minimal comments">
+  <h3 class="ui dividing header">Comments</h3>
+    {% for i in data %}
+      <div class="comment">
+        <a class="avatar">
+          <img src={% static "images/icon/worm.png"%}>
+        </a>
+        <div class="content">
+          <a class="author">{{ i.user_name }}</a>
+          <div class="metadata">
+            <span class="date">{{ i.reply_time }}</span>
+          </div>
+          <div class="text">{{ i.reply }}</div>
+          <div class="actions">
+            <a class="reply">Reply</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+  <form class="ui reply form" action="/job_web/message_board/" method="post" >
+    {% csrf_token %}
+    <div class="field" >
+      <input name = "reply" type="text" style="width: 100%;">
+    </div>
+      <input type ="submit" class="ui blue button" value="Add Reply">
+  </form>
+</div>
+</div>
+{% endblock %}
