@@ -35,12 +35,6 @@ block_1.setAttribute("value","显示手动删除");
     {% endblock %}
 
     {% block index_body %}
-{#        <script >#}
-{#        window.onload=function (){#}
-{#        var get=document.getElementById("select_chart").value;#}
-{#        document.getElementById("page_next").href= '?&select_chart='+ get +'&page= {{ lat.next_page_number }}';#}
-{#        }#}
-{#        </script>#}
 
     {% if homepage_check == 'yes' %}
         <div class="column " style="margin: 15px 35% 0 35%">
@@ -55,13 +49,12 @@ block_1.setAttribute("value","显示手动删除");
       <div class="column" style="">
           <div class="pagnitor">
               {% if lat.has_previous %}
-                <a href = "?page = {{ lat.previous_page_number }}">< Pre </a>
+                <a href = "?page = {{ lat.previous_page_number }}&select_chart={{ select_chart_name }}">< Pre </a>
               {% endif %}
                 <span>{{ lat.number }} of {{ lat.paginator.num_pages }}</span>
               {% if lat.has_next %}
-                <a href = "?page= {{ lat.next_page_number }}">Next ></a>
+                <a href = "?page= {{ lat.next_page_number }}&select_chart={{ select_chart_name }}">Next ></a>
               {% endif %}
-{#                  <a id="page_next" href = "?&select_chart= &page= {{ lat.next_page_number }}" >Next ></a>#}
           </div>
       </div>
     </div>
@@ -112,9 +105,12 @@ block_1.setAttribute("value","显示手动删除");
             {% if delete_datas_info != '' %}
                 <p>{{ delete_datas_info }}<br></p>
             {% endif %}
-            {% if pages != '' %}
-                <p>{{ pages }}<br></p>
-            {% endif %}
+{#            {% if pages != '' %}#}
+{#                <p>{{ pages }}<br></p>#}
+{#            {% endif %}#}
+{#            {% if select_chart_name != '' %}#}
+{#                <p>{{ select_chart_name }}<br></p>#}
+{#            {% endif %}#}
         </div>
 
 {#        <div style="margin: 100px;border-color: red;">#}

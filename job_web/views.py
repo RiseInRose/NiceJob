@@ -212,6 +212,7 @@ def mine(request):
         'add_datas_info': add_datas_info,
         'select_chart_info': select_chart_info,
         'delete_datas_info': delete_datas_info,
+        'select_chart_name':select_chart,
         # 'content':content
     }
 # 这里遇到字典在网页中无法正确解析，所以直接在数据结构里面搞定
