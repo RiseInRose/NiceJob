@@ -55,11 +55,11 @@ block_1.setAttribute("value","显示手动删除");
       <div class="column" style="">
           <div class="pagnitor">
               {% if lat.has_previous %}
-                  <a href = "page = {{ lat.previous_page_number }}">< Pre </a>
+                <a href = "?page = {{ lat.previous_page_number }}">< Pre </a>
               {% endif %}
                 <span>{{ lat.number }} of {{ lat.paginator.num_pages }}</span>
               {% if lat.has_next %}
-                <a id="page_next" href = "page = {{ lat.next_page_number }}" >Next ></a>
+                <a href = "?page= {{ lat.next_page_number }}">Next ></a>
               {% endif %}
 {#                  <a id="page_next" href = "?&select_chart= &page= {{ lat.next_page_number }}" >Next ></a>#}
           </div>
@@ -111,6 +111,9 @@ block_1.setAttribute("value","显示手动删除");
             {% endif %}
             {% if delete_datas_info != '' %}
                 <p>{{ delete_datas_info }}<br></p>
+            {% endif %}
+            {% if pages != '' %}
+                <p>{{ pages }}<br></p>
             {% endif %}
         </div>
 

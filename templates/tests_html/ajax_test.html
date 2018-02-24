@@ -40,7 +40,8 @@ function AjaxFunction(){
 
     queryString +=  "&wpm=" + wpm + "&sex=" + sex;
     AjaxRequest.open("GET", "http://127.0.0.1:8000/job_web/ajax_test" + queryString, true);
-    AjaxRequest.send(null);
+    AjaxRequest.send();
+    alert(AjaxRequest.responseText);
 }
 //-->
 </script>

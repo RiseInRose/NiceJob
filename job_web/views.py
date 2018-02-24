@@ -57,7 +57,8 @@ def index2(request):
         'datas_name':names,
         'datas_name_check':datas_name_check,
         'add_datas_info': add_datas_info,
-        'homepage_check': 'yes'
+        'homepage_check': 'yes',
+        'pages':page
     }
     # 这里遇到字典在网页中无法正确解析，所以直接在数据结构里面搞定
     return render(request, 'job_web/index.html', context)
