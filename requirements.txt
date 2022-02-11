@@ -116,7 +116,7 @@ terminado==0.6
 testpath==0.3.1
 tornado==4.5.2
 traitlets==4.3.2
-Twisted==17.1.0
+Twisted==22.1.0
 u-msgpack-python==2.4.1
 urllib3==1.22
 w3lib==1.17.0
